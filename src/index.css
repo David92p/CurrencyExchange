@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container-app {
+  height: 100vh;
+  width: 100vw;
+  border: 5px solid red;
+}
+
+.title {
+  color: rgb(33, 198, 33);
+  text-align: center;
+  padding: 10px;
+  height: 10%;
+}
+
+.container-main {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+}
+
+.container-data {
+  display: flex;
+
+  height: 70%;
+  border: 1px solid blue;
+}
+
+.chart {
+  width: 70%;
+  border: 1px solid blueviolet;
+  height: 100%;
+}
+
+.wallet {
+  width: 30%;
+  height: 100%;
+  border: 1px solid red;
+}
+
+.currency-exchange {
+  display: flex;
+  height: 30%;
+}
+
+.i-have {
+  width: 50%;
+  height: 100%;
+  border: 1px solid red;
+}
+
+.i-want {
+  width: 50%;
+  height: 100%;
+  border: 1px solid red;
+}
+
+
