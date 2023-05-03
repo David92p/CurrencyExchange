@@ -1,15 +1,18 @@
+import { useEffect, useState } from "react";
+
 import CurrencyExchange from "./components/CurrencyExchange";
 import Chart from "./components/Chart";
 import Wallet from "./components/Wallet";
-import { useEffect, useState } from "react";
+
+import {RiExchangeLine} from 'react-icons/ri';
 
 const App = () => {
   const API = "api.frankfurter.app";
 
   const [currencies, setCurrencies] = useState(null);
   const [state, setState] = useState({
-    leftAmount: 1,
-    rightAmount: 1,
+    leftAmount: 0,
+    rightAmount: 0,
     leftCurrency: "EUR",
     rightCurrency: "USD",
   });
@@ -66,11 +69,15 @@ const App = () => {
       `https://${API}/latest?amount=${amount}&from=${currencyFrom}&to=${currencyTo}`
     );
     const data = await response.json();
-    console.log(data);
+    return data
+    //console.log(data);
   };
 
   useEffect(() => {
-    converter();
+    const result = converter()
+    result.then(res => {
+      console.log(res);
+    })
   }, []);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,6 +116,7 @@ const App = () => {
               />
             )}
           </div>
+          {(state.leftAmount || state.rightAmount) >= 1 && <button className="btn">Convert<RiExchangeLine/></button>}
         </div>
       </div>
     </div>
