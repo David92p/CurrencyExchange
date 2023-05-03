@@ -1,55 +1,35 @@
-import React from 'react'
+// import React from "react";
 
-import { useEffect, useState } from 'react'
+// import { useEffect, useState } from "react";
 
-const CurrencyExchange = () => {
-
-  const API = 'api.frankfurter.app';
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [currencies, setCurrencies] = useState([])
-  // const [currencyGive, setCurrencyGive] = useState("");
-  // const [currencyReceive, setCurrencyReceive] = useState("")
-
-  useEffect(()=> {
-    try {
-      fetch(`https://${API}/currencies`)
-      .then(resp => resp.json())
-      .then((data) => {
-      //(`10 GBP = ${data.rates.USD} USD`);
-      for (let currency of Object.keys(data)){
-        setCurrencies(prev => [...prev, currency])
-      }
-  });
-    } catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false)
-  }, [])
-
-  if(isLoading){
-    return <h4>is loading</h4>
-  }
+const CurrencyExchange = ({
+  options,
+  currency,
+  amount,
+  handleCurrencyChange,
+  handleAmountChange,
+}) => {
   return (
-    <div className='currency-exchange'>
-      <div className='i-have'>
-        <label htmlFor="i-have">Choose the currency to give</label>
-        <select name="i-have" id="i-have">
-          <option>Please Secect Currency</option>
-          {
-            currencies.map(currency => {
-              return (
-                <option value={currency} key={currency}>{currency}</option>
-              )
-            })
-          }
-        </select>
-      </div>
-      <div className='i-want'>
-
-      </div>
+    <div>
+      <select name="currency" value={currency} onChange={handleCurrencyChange}>
+        {Object.keys(options).map((key) => {
+          return (
+            <option value={key} key={key}>
+              {options[key]}
+            </option>
+          );
+        })}
+      </select>
+      <input
+        type="number"
+        min="0"
+        max="100000"
+        step="1"
+        value={amount}
+        onChange={handleAmountChange}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default CurrencyExchange
+export default CurrencyExchange;
