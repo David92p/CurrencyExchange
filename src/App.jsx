@@ -4,11 +4,12 @@ import CurrencyExchange from "./components/CurrencyExchange";
 import Chart from "./components/Chart";
 import Wallet from "./components/Wallet";
 
-import {RiExchangeLine} from 'react-icons/ri';
+import { RiExchangeLine } from "react-icons/ri";
+
+const API = "api.frankfurter.app";
 
 const App = () => {
-  const API = "api.frankfurter.app";
-
+  // array-state di valute nella select
   const [currencies, setCurrencies] = useState(null);
   const [state, setState] = useState({
     leftAmount: 0,
@@ -16,42 +17,10 @@ const App = () => {
     leftCurrency: "EUR",
     rightCurrency: "USD",
   });
-  const [convert, setConvert] = useState("");
+  //obj-state restituito dopo conversione
+  const [conversion, setConversion] = useState(null);
 
-  const handleCurrencyChange = (e, selector) => {
-    if (selector === "from") {
-      setState((prevState) => {
-        return { ...prevState, leftCurrency: e.target.value };
-      });
-    }
-    if (selector === "to") {
-      setState((prevState) => {
-        return { ...prevState, rightCurrency: e.target.value };
-      });
-    }
-  };
-
-  const handleAmountChange = (e, selector) => {
-    if (selector === "from") {
-      setState((prevState) => {
-        return {
-          ...prevState,
-          leftAmount: e.target.value,
-          rightAmount: convert,
-        };
-      });
-    }
-    if (selector === "to") {
-      setState((prevState) => {
-        return {
-          ...prevState,
-          rightAmount: e.target.value,
-          leftAmount: convert,
-        };
-      });
-    }
-  };
-
+  //effect iniziale setCurrencies array
   useEffect(() => {
     fetch(`https://${API}/currencies`)
       .then((resp) => resp.json())
@@ -60,31 +29,50 @@ const App = () => {
       });
   }, []);
 
-  const converter = async (
-    amount = 1,
-    currencyFrom = "EUR",
-    currencyTo = "USD"
-  ) => {
-    const response = await fetch(
-      `https://${API}/latest?amount=${amount}&from=${currencyFrom}&to=${currencyTo}`
-    );
-    const data = await response.json();
-    return data
-    //console.log(data);
+  // handle change currency
+  const handleCurrencyChange = (e, converter) => {
+    if (converter) {
+      setState((prevState) => {
+        return { ...prevState, leftCurrency: e.target.value };
+      });
+    }
+    if (!converter) {
+      setState((prevState) => {
+        return { ...prevState, rightCurrency: e.target.value };
+      });
+    }
   };
 
-  useEffect(() => {
-    const result = converter()
-    result.then(res => {
-      console.log(res);
-    })
-  }, []);
+  // handle change amount
+  const handleAmountChange = (e) => {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        leftAmount: e.target.value,
+      };
+    });
+  };
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  console.log(state);
+  // func di conversione da valuta sx a valuta dx di leftAmount
+  const converter = async (currencyFrom, currencyTo) => {
+    const response = await fetch(
+      `https://${API}/latest?amount=${state.leftAmount}&from=${currencyFrom}&to=${currencyTo}`
+    );
+    const data = await response.json();
+    setState((prevState) => {
+      return {
+        ...prevState,
+        rightAmount: data.rates[state.rightCurrency],
+      };
+    });
+    setConversion(data);
+  };
+
   return (
     <div className="container-app">
-      <h1 className="title">Currency Exchange</h1>
+      <div className="container-header">
+        <h1>TITOLO</h1>
+      </div>
       <div className="container-main">
         <div className="container-data">
           <Chart />
@@ -92,31 +80,48 @@ const App = () => {
         </div>
         <div className="container-currency-exchange">
           <div className="currency-exchange">
-            {/* <label htmlFor="toGive">Choose the currency to give</label> */}
-
             {currencies && (
               <CurrencyExchange
+                converter={true}
                 options={currencies}
                 currency={state.leftCurrency}
                 amount={state.leftAmount}
-                handleAmountChange={(e) => handleAmountChange(e, "from")}
-                handleCurrencyChange={(e) => handleCurrencyChange(e, "from")}
+                handleCurrencyChange={handleCurrencyChange}
+                handleAmountChange={handleAmountChange}
               />
             )}
           </div>
           <div className="currency-exchange">
-            {/* <label htmlFor="">Choose the currency to receive</label> */}
             {currencies && (
               <CurrencyExchange
+                converter={false}
                 options={currencies}
                 currency={state.rightCurrency}
                 amount={state.rightAmount}
-                handleCurrencyChange={(e) => handleCurrencyChange(e, "to")}
-                handleAmountChange={(e) => handleAmountChange(e, "to")}
+                handleCurrencyChange={handleCurrencyChange}
+                handleAmountChange={handleAmountChange}
               />
             )}
           </div>
-          {(state.leftAmount || state.rightAmount) >= 1 && <button className="btn">Convert<RiExchangeLine/></button>}
+          {(state.leftAmount || state.rightAmount) >= 1 ? (
+            <button
+              className="btn"
+              style={{ background: "rgba(23, 177, 105, 0.8)" }}
+              onClick={() => converter(state.leftCurrency, state.rightCurrency)}
+            >
+              Convert{" "}
+              <RiExchangeLine style={{ height: "50px", width: "50px" }} />
+            </button>
+          ) : (
+            <button
+              className="btn"
+              style={{ background: "rgba(23, 177, 105, 0.5)" }}
+              disabled
+            >
+              Convert{" "}
+              <RiExchangeLine style={{ height: "50px", width: "50px" }} />
+            </button>
+          )}
         </div>
       </div>
     </div>
