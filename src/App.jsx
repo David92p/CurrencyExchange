@@ -29,6 +29,17 @@ const App = () => {
       });
   }, []);
 
+  useEffect(() => {
+    fetch(`https://${API}/latest?from=${state.leftCurrency}`)
+      .then((response) => {
+        const data = response.json();
+        return data;
+      })
+      .then((response) => {
+        setConversion(response);
+      });
+  }, [state]);
+
   // handle change currency
   const handleCurrencyChange = (e, converter) => {
     if (converter) {
@@ -52,7 +63,7 @@ const App = () => {
       };
     });
   };
-
+  console.log(conversion);
   // func di conversione da valuta sx a valuta dx di leftAmount
   const converter = async (currencyFrom, currencyTo) => {
     const response = await fetch(
@@ -91,6 +102,43 @@ const App = () => {
               />
             )}
           </div>
+          <div className="container-btn">
+            {(state.leftAmount || state.rightAmount) >= 1 ? (
+              <button
+                className="btn"
+                style={{
+                  background: "rgba(23, 177, 105)",
+                  height: "100%",
+                  width: "100%",
+                  border: "none",
+                  transitionProperty: "height, width, border",
+                  transitionDuration: "1s",
+                }}
+                onClick={() =>
+                  converter(state.leftCurrency, state.rightCurrency)
+                }
+              >
+                Convert{" "}
+                <RiExchangeLine style={{ height: "50px", width: "50px" }} />
+              </button>
+            ) : (
+              <button
+                className="btn"
+                style={{
+                  background: "#6eeeb0",
+                  height: "50%",
+                  width: "80%",
+                  border: "none",
+                  transitionProperty: "height, width, border",
+                  transitionDuration: "1s",
+                }}
+                disabled
+              >
+                Convert{" "}
+                <RiExchangeLine style={{ height: "50px", width: "50px" }} />
+              </button>
+            )}
+          </div>
           <div className="currency-exchange">
             {currencies && (
               <CurrencyExchange
@@ -103,25 +151,6 @@ const App = () => {
               />
             )}
           </div>
-          {(state.leftAmount || state.rightAmount) >= 1 ? (
-            <button
-              className="btn"
-              style={{ background: "rgba(23, 177, 105, 0.8)" }}
-              onClick={() => converter(state.leftCurrency, state.rightCurrency)}
-            >
-              Convert{" "}
-              <RiExchangeLine style={{ height: "50px", width: "50px" }} />
-            </button>
-          ) : (
-            <button
-              className="btn"
-              style={{ background: "rgba(23, 177, 105, 0.5)" }}
-              disabled
-            >
-              Convert{" "}
-              <RiExchangeLine style={{ height: "50px", width: "50px" }} />
-            </button>
-          )}
         </div>
       </div>
     </div>
