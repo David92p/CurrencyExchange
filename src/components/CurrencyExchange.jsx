@@ -10,7 +10,6 @@ const CurrencyExchange = ({
   handleCurrencyChange,
   handleAmountChange,
 }) => {
-  //console.log(`la conversione è ${conversion}`);
   return (
     <>
       <label>

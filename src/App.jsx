@@ -36,6 +36,7 @@ const App = () => {
         return data;
       })
       .then((response) => {
+        console.log(response);
         setConversion(response);
       });
   }, [state]);
@@ -63,7 +64,7 @@ const App = () => {
       };
     });
   };
-  console.log(conversion);
+
   // func di conversione da valuta sx a valuta dx di leftAmount
   const converter = async (currencyFrom, currencyTo) => {
     const response = await fetch(
@@ -87,7 +88,7 @@ const App = () => {
       <div className="container-main">
         <div className="container-data">
           <Chart />
-          <Wallet />
+          {conversion && <Wallet {...conversion} />}
         </div>
         <div className="container-currency-exchange">
           <div className="currency-exchange">
