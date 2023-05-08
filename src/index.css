@@ -37,10 +37,39 @@
   height: 100%;
 }
 
-.wallet {
+.container-wallet {
+  display: flex;
+  flex-direction: column;
+
   width: 30%;
   height: 100%;
-  border: 3px solid white;
+  color: white;
+}
+
+.header-wallet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 20%;
+  border: 1px solid red;
+}
+
+.main-wallet {
+  display: flex;
+  flex-direction: column;
+
+  height: 80%;
+  border: 1px solid blue;
+}
+
+.container-amount {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 10%;
+  border: 5px solid green;
 }
 
 .container-currency-exchange {
