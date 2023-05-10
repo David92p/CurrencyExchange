@@ -36,23 +36,19 @@ const App = () => {
         return data;
       })
       .then((response) => {
-        console.log(response);
         setConversion(response);
       });
   }, [state]);
 
   // handle change currency
   const handleCurrencyChange = (e, converter) => {
-    if (converter) {
-      setState((prevState) => {
-        return { ...prevState, leftCurrency: e.target.value };
-      });
-    }
-    if (!converter) {
-      setState((prevState) => {
-        return { ...prevState, rightCurrency: e.target.value };
-      });
-    }
+    converter
+      ? setState((prevState) => {
+          return { ...prevState, leftCurrency: e.target.value };
+        })
+      : setState((prevState) => {
+          return { ...prevState, rightCurrency: e.target.value };
+        });
   };
 
   // handle change amount
@@ -71,6 +67,7 @@ const App = () => {
       `https://${API}/latest?amount=${state.leftAmount}&from=${currencyFrom}&to=${currencyTo}`
     );
     const data = await response.json();
+
     setState((prevState) => {
       return {
         ...prevState,
@@ -79,7 +76,6 @@ const App = () => {
     });
     setConversion(data);
   };
-
   return (
     <div className="container-app">
       <div className="container-header">
@@ -103,10 +99,10 @@ const App = () => {
               />
             )}
           </div>
-          <div className="container-btn">
+          <div className="container-btn-converter">
             {(state.leftAmount || state.rightAmount) >= 1 ? (
               <button
-                className="btn"
+                className="btn-converter"
                 style={{
                   background: "rgba(23, 177, 105)",
                   height: "100%",
@@ -124,7 +120,7 @@ const App = () => {
               </button>
             ) : (
               <button
-                className="btn"
+                className="btn-converter"
                 style={{
                   background: "#6eeeb0",
                   height: "50%",
