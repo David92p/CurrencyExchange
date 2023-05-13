@@ -101,8 +101,7 @@ const Wallet = ({ amount, base, date, rates }) => {
   return (
     <div className="container-wallet">
       <div className="header-wallet">
-        <h4>Currency Update To:</h4>
-        <h2>{date}</h2>
+        <p>Currency Update To:  {date }</p>
       </div>
       <div className="main-wallet">
         <div className="container-amount">
