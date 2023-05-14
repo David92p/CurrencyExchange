@@ -19,6 +19,8 @@ const App = () => {
   });
   //obj-state restituito dopo conversione
   const [conversion, setConversion] = useState(null);
+  //const [timeSeries, setTimeSeries] = useState()
+  
 
   //effect iniziale setCurrencies array
   useEffect(() => {
@@ -39,6 +41,17 @@ const App = () => {
         setConversion(response);
       });
   }, [state]);
+
+  useEffect(() => {
+    fetch(`https://${API}/2023-04-13..?to=${state.rightCurrency}`)
+    .then((response) => {
+      const data = response.json()
+      return data
+    })
+    .then(response => {
+      console.log(response);
+    })
+  }, [state])
 
   // handle change currency
   const handleCurrencyChange = (e, converter) => {
