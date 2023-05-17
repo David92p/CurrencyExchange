@@ -19,7 +19,7 @@ const App = () => {
   });
   //obj-state restituito dopo conversione
   const [conversion, setConversion] = useState(null);
-  //const [timeSeries, setTimeSeries] = useState()
+  const [timeSeries, setTimeSeries] = useState(null)
   
 
   //effect iniziale setCurrencies array
@@ -43,15 +43,39 @@ const App = () => {
   }, [state]);
 
   useEffect(() => {
-    fetch(`https://${API}/2023-04-13..?to=${state.rightCurrency}`)
+    //fetch(`https://${API}/2023-04-13..?base=${state.leftCurrency}&to=${state.rightCurrency}`)
+    fetch(`https://${API}/2023-03-16..2023-05-16?base=${state.leftCurrency}&to=${state.rightCurrency}`)
     .then((response) => {
       const data = response.json()
       return data
     })
     .then(response => {
       console.log(response);
+      const values = []
+      for (let conversion of Object.values(response.rates)){
+        for (let value of Object.values(conversion)){
+          values.push(value)
+        }
+      }
+      setTimeSeries(
+        {
+          period: Object.keys(response.rates),
+          values: values
+        }
+      )
+      // setTimeSeries({
+      //   labels: Object.keys(response.rates),
+      //   datasets: [{
+      //     labels: "VALORE DA INSERIRE",
+      //     values: Object.values(response.rates),
+      //     backgroundColor: "aqua",
+      //     borderColor: "black",
+      //     pointBorderColor: "aqua"
+      //   }]
+      // })
+      
     })
-  }, [state])
+  }, [state.leftCurrency, state.rightCurrency])
 
   // handle change currency
   const handleCurrencyChange = (e, converter) => {
@@ -89,6 +113,9 @@ const App = () => {
     });
     setConversion(data);
   };
+
+  ///////////////////////////////////////////////////////////////////////
+
   return (
     <div className="container-app">
       <div className="container-header">
@@ -96,7 +123,7 @@ const App = () => {
       </div>
       <div className="container-main">
         <div className="container-data">
-          <Chart />
+          {timeSeries && <Chart {...timeSeries}/>}
           {conversion && <Wallet {...conversion} />}
         </div>
         <div className="container-currency-exchange">
