@@ -19,8 +19,7 @@ const App = () => {
   });
   //obj-state restituito dopo conversione
   const [conversion, setConversion] = useState(null);
-  const [timeSeries, setTimeSeries] = useState(null)
-  
+  const [timeSeries, setTimeSeries] = useState(null);
 
   //effect iniziale setCurrencies array
   useEffect(() => {
@@ -43,39 +42,28 @@ const App = () => {
   }, [state]);
 
   useEffect(() => {
-    //fetch(`https://${API}/2023-04-13..?base=${state.leftCurrency}&to=${state.rightCurrency}`)
-    fetch(`https://${API}/2023-03-16..2023-05-16?base=${state.leftCurrency}&to=${state.rightCurrency}`)
-    .then((response) => {
-      const data = response.json()
-      return data
-    })
-    .then(response => {
-      console.log(response);
-      const values = []
-      for (let conversion of Object.values(response.rates)){
-        for (let value of Object.values(conversion)){
-          values.push(value)
+    fetch(
+      `https://${API}/2023-05-11..2023-05-18?base=${state.leftCurrency}&to=${state.rightCurrency}`
+    )
+      .then((response) => {
+        const data = response.json();
+        return data;
+      })
+      .then((response) => {
+        console.log(response);
+        const values = [];
+        for (let conversion of Object.values(response.rates)) {
+          for (let value of Object.values(conversion)) {
+            values.push(value);
+          }
         }
-      }
-      setTimeSeries(
-        {
+        setTimeSeries({
           period: Object.keys(response.rates),
-          values: values
-        }
-      )
-      // setTimeSeries({
-      //   labels: Object.keys(response.rates),
-      //   datasets: [{
-      //     labels: "VALORE DA INSERIRE",
-      //     values: Object.values(response.rates),
-      //     backgroundColor: "aqua",
-      //     borderColor: "black",
-      //     pointBorderColor: "aqua"
-      //   }]
-      // })
-      
-    })
-  }, [state.leftCurrency, state.rightCurrency])
+          values: values,
+          trend: "Weekly",
+        });
+      });
+  }, [state.leftCurrency, state.rightCurrency]);
 
   // handle change currency
   const handleCurrencyChange = (e, converter) => {
@@ -113,7 +101,6 @@ const App = () => {
     });
     setConversion(data);
   };
-
   ///////////////////////////////////////////////////////////////////////
 
   return (
@@ -123,7 +110,13 @@ const App = () => {
       </div>
       <div className="container-main">
         <div className="container-data">
-          {timeSeries && <Chart {...timeSeries}/>}
+          {timeSeries && (
+            <Chart
+              {...timeSeries}
+              leftCurrency={state.leftCurrency}
+              rightCurrency={state.rightCurrency}
+            />
+          )}
           {conversion && <Wallet {...conversion} />}
         </div>
         <div className="container-currency-exchange">
@@ -168,17 +161,23 @@ const App = () => {
                   border: "none",
                   transitionProperty: "height, width, border",
                   transitionDuration: "1s",
+                  cursor: "not-allowed",
                 }}
-                disabled
               >
                 Convert{" "}
-                <RiExchangeLine style={{ height: "50px", width: "50px" }} />
+                <RiExchangeLine
+                  style={{
+                    height: "50px",
+                    width: "50px",
+                  }}
+                />
               </button>
             )}
           </div>
           <div className="currency-exchange">
             {currencies && (
               <CurrencyExchange
+                disabled={state.disabled}
                 converter={false}
                 options={currencies}
                 currency={state.rightCurrency}
