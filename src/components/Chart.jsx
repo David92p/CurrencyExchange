@@ -23,7 +23,7 @@ ChartJS.register(
   Legend
 );
 
-const Chart = ({ period, values, trend, leftCurrency, rightCurrency }) => {
+const Chart = ({ period, values, trend, leftCurrency, rightCurrency, getData, dataTime }) => {
   const options = {
     elements: {
       point: {
@@ -62,11 +62,11 @@ const Chart = ({ period, values, trend, leftCurrency, rightCurrency }) => {
         </div>
       </div>
       <div className="main-chart">
-        <Line data={data} options={options} />
+        <Line data={data} options={options}/>
         <div className="main-btn">
-          <button className="btn-chart">Week</button>
-          <button className="btn-chart">Month </button>
-          <button className="btn-chart">3 Months</button>
+          <button className="btn-chart" onClick={() => getData(dataTime("Weekly"))}>Weekly</button>
+          <button className="btn-chart" onClick={() => getData(dataTime("Monthly"))}>Monthly </button>
+          <button className="btn-chart" onClick={() => getData(dataTime("Quarterly"))}>Quarterly</button>
         </div>
       </div>
     </div>
