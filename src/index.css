@@ -1,33 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Zen+Antique&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Zen+Antique&display=swap");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Zen Antique', serif;
-
+  font-family: "Zen Antique", serif;
 }
 
 .container-app {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
 }
 
-.container-header {
+.header {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10vh;
+  height: 10%;
   background-color: #17b169;
   color: white;
-  font-size: 2em;
+  font-size: 2rem;
   border-bottom: 2px solid hwb(0 100% 0%);
 }
 
 .container-main {
   display: flex;
   flex-direction: column;
-  height: 90vh;
+  height: 90%;
 }
 
 .container-data {
@@ -51,7 +50,7 @@
   width: 100%;
   border-bottom: 2px solid white;
   color: white;
-  font-size: 1.5em;
+  font-size: 1.5rem;
 }
 
 .main-chart {
@@ -60,16 +59,15 @@
   align-items: center;
   height: 90%;
   width: 100%;
-  padding: 20px;
+  padding: 10px;
 }
 
 .main-btn {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: auto;
   align-items: center;
   justify-content: space-around;
+  height: 100%;
 }
 
 .btn-chart {
@@ -82,7 +80,7 @@
     rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
   background: rgba(23, 177, 105, 1);
   color: #ffffff;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   padding: 10px;
   text-decoration: none;
   border-style: none;
@@ -144,6 +142,7 @@
   justify-content: center;
   align-items: center;
   width: 50%;
+  margin: 10px 0;
 }
 
 .container-btn-wallet {
@@ -192,41 +191,45 @@
 }
 
 .currency-exchange label {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
   font-size: 1.5rem;
   color: white;
-  font-weight: bold;
+  font-weight: lighter;
+  height: 30%;
 }
 
 .currency-exchange div {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 40px;
-  height: 50%;
+  height: 70%;
+  width: 100%;
   border-top: 3px solid white;
 }
 
 .currency-exchange div input {
-  margin: 0 20px;
-  height: 40px;
-  width: 30%;
-  border: none;
-  font-size: 1.5rem;
-  border-bottom: 2px solid #ccc;
-  text-align: center;
-  margin-left: 50px;
   background-color: white;
+  border: none;
+  padding: 0 1em 0 0;
+  font-size: 1.5rem;
+  margin: 15px;
+  width: 50%;
   color: black;
+  padding: 5px;
 }
 
 .currency-exchange div select {
-  height: 40px;
-  text-align: center;
-  margin-right: 50px;
-  color: black;
-  font-size: 1.5rem;
+  background-color: white;
   border: none;
+  padding: 5px;
+  margin: 15px;
+  width: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: inherit;
 }
 
 .container-btn-converter {
@@ -246,4 +249,79 @@
   font-size: 1.3rem;
   font-weight: bolder;
   color: white;
+}
+
+/* Small devices (landscape phones, 576px and lower) */
+
+@media (max-width: 576px) {
+  .container-app {
+    height: 100%;
+  }
+  .header {
+    height: 100px;
+    font-size: 1.5rem;
+    border-bottom: 3px solid white;
+  }
+
+  .container-currency-exchange {
+    flex-direction: column;
+  }
+  .currency-exchange {
+    width: 100%;
+    border: none;
+  }
+  .currency-exchange label {
+    font-size: 1.1rem;
+    font-weight: lighter;
+    padding-top: 5px;
+    border: none;
+  }
+  .currency-exchange div {
+    width: 100%;
+    justify-content: center;
+    border-top: none;
+  }
+  .container-btn-converter {
+    width: 100%;
+    padding: 20px;
+  }
+  .btn-converter {
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .container-main {
+    flex-direction: column-reverse;
+    height: 100%;
+  }
+  .container-data {
+    flex-direction: column;
+    padding: 10px;
+  }
+  .container-chart {
+    width: 100%;
+  }
+  .header-chart {
+    font-size: 1.3rem;
+  }
+  .main-chart {
+    flex-direction: column;
+    height: 400px;
+    justify-content: space-evenly;
+    padding: 0;
+    padding-top: 10px;
+  }
+  .main-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 150px;
+    width: 100%;
+  }
+  .container-wallet {
+    width: 100%;
+    border: none;
+  }
+  .header-wallet .container-currencies {
+    padding: 0;
+  }
 }
