@@ -22,7 +22,7 @@ const App = () => {
   const [conversion, setConversion] = useState(null);
   // obj-state contenente i dati da usare nel chart component
   const [timeSeries, setTimeSeries] = useState(null);
-  
+
   //effect iniziale setCurrencies array
   useEffect(() => {
     fetch(`https://${API}/currencies`)
@@ -44,10 +44,10 @@ const App = () => {
       });
   }, [state]);
 
-  // effect iniziale su chart component con parametro settimanale 
+  // effect iniziale su chart component con parametro settimanale
   useEffect(() => {
-    getDataCurrencyExchange(getTimePeriodHandle("Weekly"))
-  }, [state.leftCurrency, state.rightCurrency])
+    getDataCurrencyExchange(getTimePeriodHandle("Weekly"));
+  }, [state.leftCurrency, state.rightCurrency]);
 
   // handle change currency
   const handleCurrencyChange = (e, converter) => {
@@ -71,69 +71,87 @@ const App = () => {
   };
 
   const getDataCurrencyExchange = (data) => {
-    fetch(`https://${API}/${data.yearStart}-${data.monthStart}-${data.dayStart}..${data.yearEnd}-${data.monthEnd}-${data.dayEnd}?base=${state.leftCurrency}&to=${state.rightCurrency}`)
-    .then(response => {
-      return response.json()
-    })
-    .then(response => {
-      const values = [];
+    fetch(
+      `https://${API}/${data.yearStart}-${data.monthStart}-${data.dayStart}..${data.yearEnd}-${data.monthEnd}-${data.dayEnd}?base=${state.leftCurrency}&to=${state.rightCurrency}`
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        const values = [];
         for (let conversion of Object.values(response.rates)) {
           for (let value of Object.values(conversion)) {
             values.push(value);
           }
         }
-        setTimeSeries(prev => {
-          return { ...prev, period: Object.keys(response.rates), values: values, trend: data.trend}
+        setTimeSeries((prev) => {
+          return {
+            ...prev,
+            period: Object.keys(response.rates),
+            values: values,
+            trend: data.trend,
+          };
         });
-    })
-  }
-
+      });
+  };
 
   // la funzione restituisci la fascia temporale richiesta (weekly, monthly, quarterly) a partire dalla data attuale
   const getTimePeriodHandle = (period) => {
-    const currentDay = new Date() // data attuale
-    const milliSecondsDays = 86400000 // millisecondi giornalieri
+    const currentDay = new Date(); // data attuale
+    const milliSecondsDays = 86400000; // millisecondi giornalieri
     const currentMilliseconds = currentDay.getTime(); // millisecondi ad oggi
-    
-    let endDate = [] // giorno - mese - anno
-    let starDate = [] // giorno - mese - anno
-    let milliSecondsStart
-    if (period === "Weekly"){
-      milliSecondsStart = milliSecondsDays * 7
+
+    let endDate = []; // giorno - mese - anno
+    let starDate = []; // giorno - mese - anno
+    let milliSecondsStart;
+    if (period === "Weekly") {
+      milliSecondsStart = milliSecondsDays * 7;
     }
-    if (period === "Monthly"){
-      milliSecondsStart = milliSecondsDays * 30
+    if (period === "Monthly") {
+      milliSecondsStart = milliSecondsDays * 30;
     }
-    if (period === "Quarterly"){
-      milliSecondsStart = milliSecondsDays * 90
+    if (period === "Quarterly") {
+      milliSecondsStart = milliSecondsDays * 90;
     }
 
-    const startMilliseconds = currentMilliseconds - milliSecondsStart // millisecondi di inizio
-    const startDate = new Date(startMilliseconds) // data di inizio
-    const startDay = startDate.getDate() <= 9 ? "0" + startDate.getDate() : startDate.getDate().toString() // giorno di inizio
-    const startMonth = (startDate.getMonth() + 1) <= 9 ? "0" + (startDate.getMonth() + 1) : (startDate.getMonth() + 1).toString() // mese di inizio
-    const startYear = startDate.getFullYear().toString() // anno di inizio
-    const endDay = currentDay.getDate() <= 9 ? "0" + currentDay.getDate() : currentDay.getDate().toString() // giorno di fine
-    const endMonth = (currentDay.getMonth() + 1) <= 9 ? "0" + (currentDay.getMonth() + 1) : (currentDay.getMonth() + 1).toString() // mese di fine
-    const endYear = currentDay.getFullYear().toString() // anno di fine
-    
-    starDate.push(startDay, startMonth, startYear)
-    endDate.push(endDay, endMonth, endYear)
+    const startMilliseconds = currentMilliseconds - milliSecondsStart; // millisecondi di inizio
+    const startDate = new Date(startMilliseconds); // data di inizio
+    const startDay =
+      startDate.getDate() <= 9
+        ? "0" + startDate.getDate()
+        : startDate.getDate().toString(); // giorno di inizio
+    const startMonth =
+      startDate.getMonth() + 1 <= 9
+        ? "0" + (startDate.getMonth() + 1)
+        : (startDate.getMonth() + 1).toString(); // mese di inizio
+    const startYear = startDate.getFullYear().toString(); // anno di inizio
+    const endDay =
+      currentDay.getDate() <= 9
+        ? "0" + currentDay.getDate()
+        : currentDay.getDate().toString(); // giorno di fine
+    const endMonth =
+      currentDay.getMonth() + 1 <= 9
+        ? "0" + (currentDay.getMonth() + 1)
+        : (currentDay.getMonth() + 1).toString(); // mese di fine
+    const endYear = currentDay.getFullYear().toString(); // anno di fine
 
-    // obj finale utilizzato per stabilire le date utili da passare 
+    starDate.push(startDay, startMonth, startYear);
+    endDate.push(endDay, endMonth, endYear);
+
+    // obj finale utilizzato per stabilire le date utili da passare
     const data = {
-          dayEnd: endDate[0],
-          monthEnd: endDate[1],
-          yearEnd: endDate[2],
-          dayStart: starDate[0],
-          monthStart: starDate[1],
-          yearStart: starDate[2],
-          trend: period
-        };
+      dayEnd: endDate[0],
+      monthEnd: endDate[1],
+      yearEnd: endDate[2],
+      dayStart: starDate[0],
+      monthStart: starDate[1],
+      yearStart: starDate[2],
+      trend: period,
+    };
 
-    return data 
-  }
-    
+    return data;
+  };
+
   // func per conversione da currency sx a currency dx di leftAmount
   const converter = async (currencyFrom, currencyTo) => {
     const response = await fetch(
@@ -154,9 +172,7 @@ const App = () => {
 
   return (
     <div className="container-app">
-      <div className="container-header">
-        Currency Exchange App
-      </div>
+      <div className="header">Currency Exchange App</div>
       <div className="container-main">
         <div className="container-data">
           {timeSeries && (
@@ -164,8 +180,8 @@ const App = () => {
               {...timeSeries}
               leftCurrency={state.leftCurrency}
               rightCurrency={state.rightCurrency}
-              getData = {getDataCurrencyExchange}
-              dataTime = {getTimePeriodHandle}
+              getData={getDataCurrencyExchange}
+              dataTime={getTimePeriodHandle}
             />
           )}
           {conversion && <Wallet {...conversion} />}
