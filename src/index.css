@@ -281,6 +281,12 @@
     justify-content: center;
     border-top: none;
   }
+  .currency-exchange div input {
+    font-size: 1.15rem;
+  }
+  .currency-exchange div select {
+    font-size: 1.15rem;
+  }
   .container-btn-converter {
     width: 100%;
     padding: 20px;
