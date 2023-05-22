@@ -142,7 +142,6 @@
   justify-content: center;
   align-items: center;
   width: 50%;
-  margin: 10px 0;
 }
 
 .container-btn-wallet {
@@ -153,6 +152,7 @@
   width: 100%;
   padding-bottom: 10px;
   padding-top: 10px;
+  margin-top: 5px;
 }
 
 .btn-wallet {
@@ -251,16 +251,112 @@
   color: white;
 }
 
+/* Medium devices (landscape ipad, 1100px and lower) */
+@media (min-width: 577px) and (max-width: 1024px){
+  .container-app {
+    height: 100%;
+  }
+
+  .header {
+    height: 50px;
+    font-size: 1.8rem;
+    border-bottom: 4px solid white;
+  }
+
+  .container-main {
+    flex-direction: column-reverse;
+    height: 100%;
+  }
+  .container-currency-exchange {
+    width: 100%;
+    border-bottom: 4px solid white;
+  }
+  .currency-exchange {
+    width: 40%;
+    border: none;
+    height: 100%;
+  }
+  .currency-exchange label{
+    font-size: 1.3rem;
+    height: 30%;
+  }
+  .currency-exchange div {
+    flex-direction: column;
+    height: 70%;
+  }
+  .currency-exchange div input  {
+    width: 80%;
+    font-size: 1.3rem;
+  }
+  .currency-exchange div select {
+    width: 80%;
+    font-size: 1.3rem;
+  }
+  .container-btn-converter {
+    width: 20%;
+    height: 100%;
+    border-left: 3px solid white;
+    border-right: 3px solid white;
+  }
+  .btn-converter {
+    border-radius: 10px;
+  }
+
+  .container-data {
+    flex-direction: column;
+    height: 90%;
+    padding: 10px;
+  }
+  .header-chart {
+    font-size: 1.8rem;
+    justify-content: space-around;
+    border-bottom: 3px solid white;
+    padding: 5px 0;
+  }
+  .container-chart {
+    width: 100%;
+  }
+  .main-chart  {
+    flex-direction: column; 
+  }
+  .main-btn {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .container-wallet {
+    width: 100%;
+    margin-top: 50px;
+    border: none;
+  }
+  .header-wallet{
+    font-size: 2rem;
+  }
+  .main-wallet {
+    font-size: 1.3rem;
+  }
+  .currency {
+    padding: 10px;
+  }
+}
 /* Small devices (landscape phones, 576px and lower) */
 
 @media (max-width: 576px) {
   .container-app {
     height: 100%;
   }
+
   .header {
-    height: 100px;
+    height: 50px;
     font-size: 1.5rem;
-    border-bottom: 3px solid white;
+    border-bottom: 4px solid white;
+  }
+
+  .container-main {
+    flex-direction: column-reverse;
+    height: 100%;
   }
 
   .container-currency-exchange {
@@ -271,7 +367,8 @@
     border: none;
   }
   .currency-exchange label {
-    font-size: 1.1rem;
+    margin-top: 10px;
+    font-size: 1rem;
     font-weight: lighter;
   }
   .currency-exchange div {
@@ -293,19 +390,17 @@
     border-radius: 10px;
     padding: 10px;
   }
-  .container-main {
-    flex-direction: column-reverse;
-    height: 100%;
-  }
+
   .container-data {
     flex-direction: column;
     padding: 10px;
   }
+  .header-chart {
+    font-size: 1.2rem;
+    justify-content: space-around;
+  }
   .container-chart {
     width: 100%;
-  }
-  .header-chart {
-    font-size: 1.3rem;
   }
   .main-chart {
     flex-direction: column;
@@ -317,9 +412,12 @@
   .main-btn {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
     height: 150px;
     width: 100%;
+  }
+  .btn-chart{
+    margin: 0 10px;
   }
   .container-wallet {
     width: 100%;
