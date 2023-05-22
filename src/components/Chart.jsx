@@ -32,7 +32,7 @@ const Chart = ({
   getData,
   dataTime,
 }) => {
-  if (window.innerWidth <= 768 && period.length > 5 && period.length <= 19) {
+  if (window.innerWidth <= 768 && period.length > 6 && period.length <= 20) {
     period = [
       period[0],
       period[3],
@@ -43,11 +43,10 @@ const Chart = ({
       period[15],
       period[18],
     ];
-    // ];
   } else if (
     window.innerWidth <= 768 &&
-    period.length > 19 &&
-    period.length <= 61
+    period.length > 20 &&
+    period.length <= 62
   ) {
     period = [
       period[0],
