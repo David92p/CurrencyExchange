@@ -9,11 +9,13 @@
 
 .container-app {
   width: 100%;
+  min-width: 100%;
   height: 100vh;
 }
 
 .header {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 10%;
@@ -28,20 +30,17 @@
   flex-direction: column;
   height: 90%;
 }
-
 .container-data {
   display: flex;
   height: 70%;
   background: rgba(20, 20, 20, 0.815);
 }
-
 .container-chart {
   display: flex;
   flex-direction: column;
   width: 70%;
   height: 100%;
 }
-
 .header-chart {
   display: flex;
   justify-content: space-evenly;
@@ -52,7 +51,6 @@
   color: white;
   font-size: 1.5rem;
 }
-
 .main-chart {
   display: flex;
   justify-content: space-around;
@@ -61,7 +59,6 @@
   width: 100%;
   padding: 10px;
 }
-
 .main-btn {
   display: flex;
   flex-direction: column;
@@ -69,7 +66,6 @@
   justify-content: space-around;
   height: 100%;
 }
-
 .btn-chart {
   -webkit-border-radius: 60;
   -moz-border-radius: 60;
@@ -86,7 +82,6 @@
   border-style: none;
   cursor: pointer;
 }
-
 .btn-chart:hover {
   background-color: rgba(23, 177, 105, 0.7);
 }
@@ -94,13 +89,11 @@
 .container-wallet {
   display: flex;
   flex-direction: column;
-
   width: 30%;
   height: 100%;
   color: white;
   border-left: 2px solid white;
 }
-
 .header-wallet {
   display: flex;
   flex-direction: column;
@@ -110,16 +103,13 @@
   height: 10%;
   padding-top: 10px;
 }
-
 .main-wallet {
   display: flex;
   flex-direction: column;
-
   height: 90%;
   width: 100%;
   padding-top: 10px;
 }
-
 .container-amount {
   display: flex;
   justify-content: space-evenly;
@@ -127,7 +117,6 @@
   height: 10%;
   width: 100%;
 }
-
 .container-currencies {
   display: flex;
   flex-wrap: wrap;
@@ -135,7 +124,6 @@
   width: 100%;
   padding-top: 10px;
 }
-
 .currency {
   display: flex;
   flex-direction: column;
@@ -143,7 +131,6 @@
   align-items: center;
   width: 50%;
 }
-
 .container-btn-wallet {
   display: flex;
   justify-content: center;
@@ -154,7 +141,6 @@
   padding-top: 10px;
   margin-top: 5px;
 }
-
 .btn-wallet {
   -webkit-border-radius: 60;
   -moz-border-radius: 60;
@@ -169,17 +155,14 @@
     rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
   cursor: pointer;
 }
-
 .btn-wallet:hover {
   background-color: rgba(23, 177, 105, 0.7);
 }
 
 .container-currency-exchange {
   display: flex;
-  justify-content: space-evenly;
   height: 30%;
 }
-
 .currency-exchange {
   display: flex;
   flex-direction: column;
@@ -188,19 +171,17 @@
   border: 2px solid white;
   background-color: #17b169;
 }
-
 .currency-exchange label {
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-bottom: 10px;
   font-size: 1.5rem;
   color: white;
   font-weight: lighter;
   height: 30%;
+  width: 100%;
 }
-
 .currency-exchange div {
   display: flex;
   justify-content: center;
@@ -209,18 +190,16 @@
   width: 100%;
   border-top: 3px solid white;
 }
-
 .currency-exchange div input {
   background-color: white;
   border: none;
-  padding: 0 1em 0 0;
+  padding: 5px;
   font-size: 1.5rem;
   margin: 15px;
   width: 50%;
   color: black;
   padding: 5px;
 }
-
 .currency-exchange div select {
   background-color: white;
   border: none;
@@ -231,7 +210,6 @@
   cursor: pointer;
   line-height: inherit;
 }
-
 .container-btn-converter {
   display: flex;
   align-items: center;
@@ -240,7 +218,6 @@
   width: 10%;
   background: rgba(20, 20, 20, 0.815);
 }
-
 .btn-converter {
   display: flex;
   flex-direction: column;
@@ -249,48 +226,39 @@
   font-size: 1.3rem;
   font-weight: bolder;
   color: white;
+  cursor: pointer;
 }
 
 /* Medium devices (landscape ipad, 1100px and lower) */
-@media (min-width: 577px) and (max-width: 1025px){
+@media (min-width: 577px) and (max-width: 1025px) {
   .container-app {
     height: 100%;
   }
-
   .header {
-    height: 100px;
+    height: 80px;
     font-size: 1.8rem;
     border-bottom: 4px solid white;
   }
 
   .container-main {
     flex-direction: column-reverse;
-    height: 100%;
+    height: 1800px;
+    padding-bottom: 10px;
   }
+
   .container-currency-exchange {
     width: 100%;
+    height: 20%;
     border-bottom: 4px solid white;
   }
   .currency-exchange {
     width: 40%;
-    height: 100%;
     border: none;
   }
-  .currency-exchange label{
+  .currency-exchange label {
     font-size: 1.3rem;
-    height: 30%;
-  }
-  .currency-exchange div {
-    flex-direction: column;
-    height: 70%;
-  }
-  .currency-exchange div input  {
-    width: 80%;
-    font-size: 1.3rem;
-  }
-  .currency-exchange div select {
-    width: 80%;
-    font-size: 1.3rem;
+    padding: 5px;
+    padding-top: 10px;
   }
   .container-btn-converter {
     width: 20%;
@@ -298,47 +266,74 @@
     border-left: 3px solid white;
     border-right: 3px solid white;
   }
+  .currency-exchange div {
+    flex-direction: column;
+    height: 70%;
+  }
+  .currency-exchange div input {
+    width: 80%;
+    font-size: 1.3rem;
+  }
+  .currency-exchange div select {
+    width: 80%;
+    font-size: 1.3rem;
+  }
   .btn-converter {
-    border-radius: 10px;
+    border-radius: 5px;
   }
 
   .container-data {
     flex-direction: column;
-    height: 90%;
-    padding: 10px;
-  }
-  .header-chart {
-    font-size: 1.8rem;
-    justify-content: space-around;
-    border-bottom: 3px solid white;
-    padding: 5px 0;
+    width: 100%;
+    height: 80%;
   }
   .container-chart {
     width: 100%;
+    height: 50%;
+    padding: 5px;
   }
-  .main-chart  {
-    flex-direction: column; 
+  .header-chart {
+    height: 10%;
+    font-size: 1.8rem;
+    justify-content: space-around;
+    border-bottom: 2px solid white;
+    padding: 5px 0;
+  }
+  .main-chart {
+    flex-direction: column;
+    font-size: 1.5rem;
+    height: 90%;
+    padding: 5px;
   }
   .main-btn {
     display: flex;
     flex-direction: row;
     width: 100%;
-    margin-top: 20px;
+    height: 20%;
   }
 
   .container-wallet {
     width: 100%;
-    margin-top: 50px;
-    border: none;
+    height: 50%;
   }
-  .header-wallet{
-    font-size: 2rem;
+  .header-wallet {
+    font-size: 1.7rem;
   }
   .main-wallet {
-    font-size: 1.3rem;
+    height: 90%;
+  }
+  .container-amount {
+    height: 20%;
+    font-size: 1.5rem;
   }
   .currency {
     padding: 10px;
+    font-size: 1.5rem;
+  }
+  .container-btn-wallet {
+    font-size: 1.3rem;
+    height: 20%;
+    padding-bottom: 0;
   }
 }
 /* Small devices (landscape phones, 576px and lower) */
@@ -416,7 +411,7 @@
     height: 150px;
     width: 100%;
   }
-  .btn-chart{
+  .btn-chart {
     margin: 0 10px;
   }
   .container-wallet {
