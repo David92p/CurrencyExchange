@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import CurrencyExchange from "./components/CurrencyExchange";
 import Chart from "./components/Chart";
 import Wallet from "./components/Wallet";
-
 import { RiExchangeLine } from "react-icons/ri";
 
 const API = "api.frankfurter.app";
@@ -25,23 +24,31 @@ const App = () => {
 
   //effect iniziale setCurrencies array
   useEffect(() => {
-    fetch(`https://${API}/currencies`)
-      .then((resp) => resp.json())
-      .then((data) => {
-        setCurrencies(data);
-      });
+    try {
+      fetch(`https://${API}/currencies`)
+        .then((resp) => resp.json())
+        .then((data) => {
+          setCurrencies(data);
+        });
+    } catch (error) {
+      console.log(`ERROR: ${error}`);
+    }
   }, []);
 
   //effect iniziale setConversion - conversioni in tutte le valute da leftCurrency - utilizzato nel wallet
   useEffect(() => {
-    fetch(`https://${API}/latest?from=${state.leftCurrency}`)
-      .then((response) => {
-        const data = response.json();
-        return data;
-      })
-      .then((response) => {
-        setConversion(response);
-      });
+    try {
+      fetch(`https://${API}/latest?from=${state.leftCurrency}`)
+        .then((response) => {
+          const data = response.json();
+          return data;
+        })
+        .then((response) => {
+          setConversion(response);
+        });
+    } catch (error) {
+      console.log(`ERROR: ${error}`);
+    }
   }, [state]);
 
   // effect iniziale su chart component con parametro settimanale
@@ -70,29 +77,34 @@ const App = () => {
     });
   };
 
+  // fnc che riceve come parametro un obj con i dati da inserire nella richiesta
   const getDataCurrencyExchange = (data) => {
-    fetch(
-      `https://${API}/${data.yearStart}-${data.monthStart}-${data.dayStart}..${data.yearEnd}-${data.monthEnd}-${data.dayEnd}?base=${state.leftCurrency}&to=${state.rightCurrency}`
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        const values = [];
-        for (let conversion of Object.values(response.rates)) {
-          for (let value of Object.values(conversion)) {
-            values.push(value);
+    try {
+      fetch(
+        `https://${API}/${data.yearStart}-${data.monthStart}-${data.dayStart}..${data.yearEnd}-${data.monthEnd}-${data.dayEnd}?base=${state.leftCurrency}&to=${state.rightCurrency}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+          const values = [];
+          for (let conversion of Object.values(response.rates)) {
+            for (let value of Object.values(conversion)) {
+              values.push(value);
+            }
           }
-        }
-        setTimeSeries((prev) => {
-          return {
-            ...prev,
-            period: Object.keys(response.rates),
-            values: values,
-            trend: data.trend,
-          };
+          setTimeSeries((prev) => {
+            return {
+              ...prev,
+              period: Object.keys(response.rates),
+              values: values,
+              trend: data.trend,
+            };
+          });
         });
-      });
+    } catch (error) {
+      console.log(`ERROR: ${error}`);
+    }
   };
 
   // la funzione restituisci la fascia temporale richiesta (weekly, monthly, quarterly) a partire dalla data attuale
@@ -154,21 +166,23 @@ const App = () => {
 
   // func per conversione da currency sx a currency dx di leftAmount
   const converter = async (currencyFrom, currencyTo) => {
-    const response = await fetch(
-      `https://${API}/latest?amount=${state.leftAmount}&from=${currencyFrom}&to=${currencyTo}`
-    );
-    const data = await response.json();
+    try {
+      const response = await fetch(
+        `https://${API}/latest?amount=${state.leftAmount}&from=${currencyFrom}&to=${currencyTo}`
+      );
+      const data = await response.json();
 
-    setState((prevState) => {
-      return {
-        ...prevState,
-        rightAmount: data.rates[state.rightCurrency],
-      };
-    });
-    setConversion(data);
+      setState((prevState) => {
+        return {
+          ...prevState,
+          rightAmount: data.rates[state.rightCurrency],
+        };
+      });
+      setConversion(data);
+    } catch (error) {
+      console.log(`ERROR: ${error}`);
+    }
   };
-
-  ///////////////////////////////////////////////////////////////////////
 
   return (
     <div className="container-app">

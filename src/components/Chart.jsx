@@ -32,6 +32,7 @@ const Chart = ({
   getData,
   dataTime,
 }) => {
+  //condizione attuata su period in caso di devices di piccola e media dimensione
   if (window.innerWidth <= 768 && period.length > 6 && period.length <= 20) {
     period = [
       period[0],
