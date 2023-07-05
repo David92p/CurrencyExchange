@@ -17,3 +17,17 @@
     https://www.frankfurter.app/docs/
 ```
 
+### Authors
+
+- [David92p](https://github.com/David92p)
+
+### Installation
+
+Install CurrencyExchange
+ with npm
+
+```bash
+  git clone 'https://github.com/David92p/CurrencyExchange.git'
+  npm install 
+  npm run dev
+```
