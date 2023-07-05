@@ -31,3 +31,13 @@ Install CurrencyExchange
   npm install 
   npm run dev
 ```
+### Languages :computer:
+
+* HTML5
+* CSS3
+* Javascript ES6
+
+### Libraries :books:
+
+* [React](https://react.dev/)
+* [Chart.js](https://www.chartjs.org/)
